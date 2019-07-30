@@ -1,19 +1,22 @@
 import pymongo as myDB
 import sys
+import numbers
 
-
-def insert_reipe(name:str, ingredients:list, pre:str):
-    mydict = {"name": name, "ingredients": ingredients, "preparation" : pre}
+def insert_reipe(name:str, ingredients:list,quants : list, pre:str):
+    mydict = {"name": name, "ingredients": ingredients,"quantities" : quants ,"preparation" : pre}
     mycollection.insert_one(mydict)
 
 
 name = sys.argv[1]
 ingre = sys.argv[2]
-ingreArr = ingre.split(",")
-prep = sys.argv[3]
+ingreArrNames = ingre.split(",")
+ingreQuan = sys.argv[3]
+ingreArrQuan = ingreQuan.split(",")
+prep = sys.argv[4]
 new_recipe = {
     "name" : name,
-    "ingredients" : ingreArr,
+    "ingredients names" : ingreArrNames,
+    "ingredients quantities" :ingreArrQuan,
     "preparation" : prep
 }
 

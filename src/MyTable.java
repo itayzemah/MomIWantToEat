@@ -1,17 +1,40 @@
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import java.util.ArrayList;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 
-public class MyTable extends TableView<String> {
+public class MyTable extends HBox {
+	private ArrayList<Recipe> currentRecipes;
+	private boolean created = false;
+
 	public MyTable() {
-        this.setEditable(true);
-        TableColumn<String,String> sunday = new TableColumn<String, String>("יום ראשון");
-        TableColumn<String,String> monday = new TableColumn<String, String>("יום שני");
-        TableColumn<String,String> tuesday = new TableColumn<String, String>("יום שלישי");
-        TableColumn<String,String> wednesday = new TableColumn<String, String>("יום רביעי");
-        TableColumn<String,String> thursday = new TableColumn<String, String>("יום חמישי");
-        TableColumn<String,String> frifday = new TableColumn<String, String>("יום שישי");
-
-        this.getColumns().addAll(frifday,thursday,wednesday,tuesday,monday,sunday );
+		this.getChildren().add(new Label("טרם נקבעה מערכת מהתכונים שלך"));
 
 	}
+
+	public void setNewTable(ArrayList<Recipe> randomRecipes) {
+		this.setCurrentRecipes(randomRecipes);
+		this.getChildren().clear();
+		for (int i = 0; i < randomRecipes.size(); i++) {
+			this.getChildren().add(randomRecipes.get(i).toPane());
+
+		}
+		setCreated(true);
+	}
+
+	public ArrayList<Recipe> getCurrentRecipes() {
+		return currentRecipes;
+	}
+
+	public void setCurrentRecipes(ArrayList<Recipe> currentRecipes) {
+		this.currentRecipes = currentRecipes;
+	}
+
+	public boolean isCreated() {
+		return created;
+	}
+
+	public void setCreated(boolean created) {
+		this.created = created;
+	}
+
 }

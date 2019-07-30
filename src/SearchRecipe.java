@@ -98,7 +98,7 @@ public class SearchRecipe extends GridPane {
 		try {
 			tmpFile = File.createTempFile(df.format(dateobj.getTime()), ".txt", tmpFile);
 
-			p = Runtime.getRuntime().exec("cmd /c start cmd.exe /K \"python DataBase.py \"" + recipeName + "\" > "
+			p = Runtime.getRuntime().exec("cmd /c start cmd.exe /K \"python DataBase.py \"" + recipeName + "\" >> "
 					+ tmpFile.toString() + " && exit\" ");
 			Thread.sleep(500);
 			Scanner s = new Scanner(tmpFile);
@@ -106,6 +106,7 @@ public class SearchRecipe extends GridPane {
 				line += s.nextLine() + "\n";
 			}
 			s.close();
+			line = cleanLine(line);
 			Recipe r = new Recipe(line);
 			r.ShowRecipe();
 		} catch (Exception e2) {
@@ -117,6 +118,8 @@ public class SearchRecipe extends GridPane {
 	}
 	
 	
+
+
 	public void search() {
 		if (getNameTF().isEmpty() && getIngreTF().isEmpty()) {
 			Alert error = new Alert(AlertType.ERROR);
@@ -162,4 +165,15 @@ public class SearchRecipe extends GridPane {
 	public String getIngreTF() {
 		return ingredTF.getText();
 	}
+
+
+	public static String cleanLine(String line) {
+		line = line.replaceAll("\\{", "");
+		line = line.replaceAll("}", "");
+		line = line.replace("]", "");
+		line = line.replace("[", "");
+		line = line.replace("'", "");
+		return line;
+	}
+
 }

@@ -7,7 +7,21 @@ def find_name(name :str):
 
 
 def find_ingredients(name):
-    return mycollection.find({"name": name}).distinct('ingredients')
+    l = []
+    lst = mycollection.find({"name": name}).distinct('ingredients names')
+    for i in lst:
+        if i.strip() is not '' or not ' ':
+            l.append(i.strip())
+    return l
+
+
+def find_quantities(name):
+    lst = mycollection.find({"name": name}).distinct('ingredients quantities')
+    l = []
+    for i in lst:
+        if i.strip().isnumeric():
+            l.append(i.strip())
+    return l
 
 
 def find_preperation(name):
@@ -17,8 +31,9 @@ def find_preperation(name):
 def get_full_recipe(name):
     lst1 = find_name(name)
     lst2 = find_ingredients(name)
+    lst4 = find_quantities(name)
     lst3 = find_preperation(name)
-    return "{}\n{}\n{}.".format(' '.join(lst1), ', '.join(lst2), ' '.join(lst3))
+    return "{}\n{}\n{}\n{}.".format(' '.join(lst1), ', '.join(lst2), ', '.join(lst4), ' '.join(lst3))
 
 
 def insert_reipe(name:str, ingredients:list, pre:str):

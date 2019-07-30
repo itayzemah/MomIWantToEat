@@ -11,20 +11,39 @@ if len(sys.argv) > 2:
     ingreArr = ingre.split(",")
     searchByIngre = mycollection.find({"ingredients": {"$all": ingreArr}})
     for rec in searchByIngre:
+        l1 = []
+        l2 = []
         print(rec['name'])
-        print(rec['ingredients'])
+        lst1 = rec['ingredients names']
+        for x in lst1:
+            if x.strip() is not '' or not ' ':
+                l1.append(x)
+        print(l1)
+        lst2 = rec['ingredients quantities']
+        for x in lst2:
+            if x.strip() is not '' or not ' ':
+                l2.append(x)
+        print(l2)
         print(rec['preparation'])
 
 if name is not '~noTitle~':
     searchByName =mycollection.find({"name": name})
     # print(mycollection.find({"name": name}))
     for rec in searchByName:
+        l1 = []
+        l2 = []
         print(rec['name'])
-        print(rec['ingredients'])
+        lst1 = rec['ingredients names']
+        for x in lst1:
+            if x.strip() is not '' or not ' ':
+                l1.append(x)
+        print(l1)
+        lst2 = rec['ingredients quantities']
+        for x in lst2:
+            if x.strip() is not '' or not ' ':
+                l2.append(x)
+        print(l2)
         print(rec['preparation'])
-    # print(searchByName.pretty())
-    # print(searchByName[2])
-    # print(searchByName[3])
 sys.exit(0)
 
 

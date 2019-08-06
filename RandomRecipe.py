@@ -4,7 +4,7 @@ import random
 myclient = myDB.MongoClient('localhost:27017')
 mydb = myclient['mydb']
 mycollection = mydb["recipe"]
-ran = mycollection.find().limit( 1 ).skip( random.randint(1, mycollection.estimated_document_count()-1))
+ran = mycollection.find().limit( 1 ).skip( random.randint(0, mycollection.estimated_document_count()-1))
 for rec in ran:
     l1 = []
     l2 = []
@@ -15,10 +15,7 @@ for rec in ran:
             l1.append(x)
     print(l1)
     lst2 = rec['ingredients quantities']
-    for x in lst2:
-        if x.strip() is not '' or not ' ':
-            l2.append(x)
-    print(l2)
+    print(lst2)
     print(rec['preparation'])
 
 

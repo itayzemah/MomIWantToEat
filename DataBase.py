@@ -1,5 +1,10 @@
 import pymongo as myDB
 import sys
+import pprint
+
+myclient = myDB.MongoClient('localhost:27017')
+mydb = myclient['mydb']
+mycollection = mydb["recipe"]
 
 
 def find_name(name :str):
@@ -17,10 +22,11 @@ def find_ingredients(name):
 
 def find_quantities(name):
     lst = mycollection.find({"name": name}).distinct('ingredients quantities')
+    print(lst)
     l = []
     for i in lst:
-        if i.strip().isnumeric():
-            l.append(i.strip())
+        if i is not '' or not ' ':
+            l.append(i)
     return l
 
 
@@ -31,20 +37,29 @@ def find_preperation(name):
 def get_full_recipe(name):
     lst1 = find_name(name)
     lst2 = find_ingredients(name)
-    lst4 = find_quantities(name)
+    lst4 = [str(x) for x in find_quantities(name)]
     lst3 = find_preperation(name)
     return "{}\n{}\n{}\n{}.".format(' '.join(lst1), ', '.join(lst2), ', '.join(lst4), ' '.join(lst3))
 
 
-def insert_reipe(name:str, ingredients:list, pre:str):
-    mydict = {"name": name, "ingredients": ingredients, "preparation" : pre}
-    mycollection.insert_one(mydict)
+def print_rec(name):
+    res = mycollection.find({"name": name}).next()
+    # print(res.next())
+    print(res['name'])
+    print(res['ingredients names'])
+    print(res['ingredients quantities'])
+    print(res['preparation'])
+    # print(res.("ingredients quantities"))
 
 
-myclient = myDB.MongoClient('localhost:27017')
-mydb = myclient['mydb']
-mycollection = mydb["recipe"]
-print(get_full_recipe(sys.argv[1]))
+# def insert_reipe(name:str, ingredients:list, pre:str):
+#     mydict = {"name": name, "ingredients": ingredients, "preparation" : pre}
+#     mycollection.insert_one(mydict)
+
+
+
+print_rec(sys.argv[1])
+# print(get_full_recipe(sys.argv[1]))
 sys.exit(0)
 # x =mydb.mycollection.find({"ingredients": {'$regex': '/m/'}})
 # print(x)

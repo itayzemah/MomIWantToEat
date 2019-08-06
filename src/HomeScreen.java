@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,6 +14,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 
 public class HomeScreen extends BorderPane {
 	private Button addRecipe;
@@ -40,6 +48,23 @@ public class HomeScreen extends BorderPane {
 
 			addStage.setScene(addScene);
 			addStage.show();
+
+		});
+		
+		showAllRecepipeInList.setOnAction(e -> {
+			try {
+				MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
+				DB database = mongoClient.getDB("mydb");
+				DBCollection collection = database.getCollection("recipe");
+				DBCursor cursor = collection.find();
+				while (cursor.hasNext()) {
+				   DBObject obj = cursor.next();
+				   System.out.println(obj);
+				}
+			} catch (UnknownHostException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
 		});
 		showShoppingList.setOnAction(e -> {
@@ -101,11 +126,11 @@ public class HomeScreen extends BorderPane {
 			String recipeName = br.readLine();
 			String recipeIngre = br.readLine();
 			recipeIngre = SearchRecipe.cleanLine(recipeIngre);
+			String ingreQuants = br.readLine();
+			ingreQuants = SearchRecipe.cleanLine(ingreQuants);
 //			recipeIngre = recipeIngre.replace("]", "");
 //			recipeIngre = recipeIngre.replace("[", "");
 //			recipeIngre = recipeIngre.replace("'", "");
-			String ingreQuants = br.readLine();
-			ingreQuants = SearchRecipe.cleanLine(ingreQuants);
 //			ingreQuants = ingreQuants.replace("]", "");
 //			ingreQuants = ingreQuants.replace("[", "");
 //			ingreQuants = ingreQuants.replace("'", "");
@@ -118,7 +143,7 @@ public class HomeScreen extends BorderPane {
 		br.close();
 	}
 
-	private Hashtable<String, Double> makeIngredientsTable(String[] ingre, String[] quants) {
+	public static Hashtable<String, Double> makeIngredientsTable(String[] ingre, String[] quants) {
 		Hashtable<String, Double> table = new Hashtable<String, Double>();
 		for (int i = 0; i < quants.length; i++) {
 			table.put(ingre[i].trim(), Double.valueOf(quants[i].trim()));

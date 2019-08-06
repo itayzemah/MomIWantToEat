@@ -9,9 +9,9 @@ def insert_reipe(name:str, ingredients:list,quants : list, pre:str):
 
 name = sys.argv[1]
 ingre = sys.argv[2]
-ingreArrNames = ingre.split(",")
+ingreArrNames = [x for x in ingre.split(",") if x is not '' or not ' ']
 ingreQuan = sys.argv[3]
-ingreArrQuan = ingreQuan.split(",")
+ingreArrQuan = [float(x) for x in ingreQuan.split(",") if x is not '' or not ' ']
 prep = sys.argv[4]
 new_recipe = {
     "name" : name,

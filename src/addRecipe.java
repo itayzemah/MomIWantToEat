@@ -167,18 +167,24 @@ public class addRecipe extends GridPane {
 	public String getIngreTFNames() {
 		StringBuffer names = new StringBuffer();
 		for (int TF = 0; TF < ingredTFArr.length-1; TF++) {
+			if (ingredTFArr[TF].getText().isEmpty()) {
+				continue;
+			}
 			names.append(ingredTFArr[TF].getText() + ",");
 		}
 		names.append(ingredTFArr[ingredTFArr.length-1].getText());
-		return names.toString();
+		String str = names.toString().replaceAll("\"", ".");
+		System.out.println(str);
+		return str;
 	}
 	
 	private String getIngredTFQuan() {
 		StringBuffer quans = new StringBuffer();
 		for (int TF = 0; TF < quanTFArr.length-1; TF++) {
-			quans.append(quanTFArr[TF].getText() + ",");
+			quans.append(quanTFArr[TF].getText()+ ",");
 		}
 		quans.append(quanTFArr[quanTFArr.length-1].getText());
+		System.out.println(quans.toString());
 		return quans.toString();
 	}
 

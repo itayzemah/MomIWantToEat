@@ -3,5 +3,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="C:/Users/itayz/eclipse-workspace/MomyWhatCanIEat/javax.mail.jar"/>
+	<classpathentry kind="lib" path="C:/Users/itayz/eclipse-workspace/MomyWhatCanIEat/mongo-java-driver-2.13.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -56,7 +56,7 @@ public class ShoppingList {
 		txt.setWrapText(true);
 		txt.setEditable(false);
 		txt.setFont(new Font("Segoe Script", 22));
-		txt.setMaxWidth(200);
+		txt.setMaxWidth(300);
 //		txt.setAl
 		VBox box = new VBox();
 		box.getChildren().add(sendMail);

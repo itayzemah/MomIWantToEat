@@ -12,6 +12,7 @@ public class Recipe {
 	private Hashtable<String,Double> ingredients = new Hashtable<>();
 	private String instraction;
 	private Image image;
+	public final static int NUMBER_OF_ELEMENTS_IN_RECIPE = 4;
 	
 	public Recipe(String title,Hashtable<String,Double> ingredients,String instraction) {
 		this.setTitle(title);
@@ -23,7 +24,6 @@ public class Recipe {
 	}
 	
 	public Recipe(String line) {
-		System.out.println("line = " + line);
 		String[] r = line.split("\n");
 		this.title = r[0];
 		String[] ingre = r[1].split(",");
@@ -48,7 +48,6 @@ public class Recipe {
 		myRecipe.add(new Label(this.ingredients.toString()), 0, 1);
 		myRecipe.add(new Label(this.instraction), 0, 2);
 		myRecipe.setVgap(10);
-		
 		s.setScene(sc);
 		s.show();
 	}
